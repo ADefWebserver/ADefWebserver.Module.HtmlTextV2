@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+    <Version>1.0.0</Version>
+    <Product>ADefWebserver.Module.HtmlTextV2</Product>
+    <Authors>ADefWebserver</Authors>
+    <Company>ADefWebserver</Company>
+    <Description>HTML Module</Description>
+    <Copyright>ADefWebserver</Copyright>
+    <AssemblyName>ADefWebserver.Module.HtmlTextV2.Server.Oqtane</AssemblyName>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot\_content\**\*.*" />
+    <None Include="wwwroot\_content\**\*.*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.4" />
+    <PackageReference Include="Microsoft.Extensions.Localization" Version="8.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Client\ADefWebserver.Module.HtmlTextV2.Client.csproj" />
+    <ProjectReference Include="..\Shared\ADefWebserver.Module.HtmlTextV2.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Oqtane.Server"><HintPath>..\..\oqtane.framework\Oqtane.Server\bin\Debug\net8.0\Oqtane.Server.dll</HintPath></Reference>
+    <Reference Include="Oqtane.Shared"><HintPath>..\..\oqtane.framework\Oqtane.Server\bin\Debug\net8.0\Oqtane.Shared.dll</HintPath></Reference>
+  </ItemGroup>
+</Project>

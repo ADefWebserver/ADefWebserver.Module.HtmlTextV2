@@ -1,0 +1,52 @@
+@using ADefWebserver.Module.HtmlTextV2.Services
+@namespace ADefWebserver.Module.HtmlTextV2
+@inherits ModuleBase
+@inject IHtmlTextService HtmlTextService
+@inject IStringLocalizer<Index> Localizer
+
+@if (PageState.EditMode)
+{
+    <div class="text-center mb-2">
+        <ActionLink Action="Edit" EditMode="true" ResourceKey="Edit" />
+    </div>
+}
+
+@((MarkupString)content)
+
+@if (PageState.EditMode && content.Length > 3000)
+{
+    <div class="text-center mt-2">
+        <ActionLink Action="Edit" EditMode="true" ResourceKey="Edit" />
+    </div>
+}
+
+@code {
+    private string content = "";
+
+    public override string RenderMode => RenderModes.Static;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        try
+        {
+            if (ShouldRender())
+            {
+                var htmltext = await HtmlTextService.GetHtmlTextAsync(ModuleState.ModuleId);
+                if (htmltext != null)
+                {
+                    content = htmltext.Content;
+                    content = Utilities.FormatContent(content, PageState.Alias, "render");
+                }
+                else
+                {
+                    content = "";
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            await logger.LogError(ex, "Error Loading Content {Error}", ex.Message);
+            AddModuleMessage(Localizer["Error.Content.Load"], MessageType.Error);
+        }
+    }
+}

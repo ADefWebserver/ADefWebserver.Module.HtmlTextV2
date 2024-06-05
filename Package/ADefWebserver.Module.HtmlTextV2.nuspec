@@ -1,32 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
-  <metadata>
-    <id>ADefWebserver.Module.HtmlTextV2</id>
-    <version>1.1.0</version>
-    <authors>ADefWebserver</authors>
-    <owners>ADefWebserver</owners>
-    <title>HtmlTextV2</title>
-    <description>HTML Module</description>
-    <copyright>ADefWebserver</copyright>
-    <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <license type="expression">MIT</license>
-    <projectUrl>https://github.com/oqtane/oqtane.framework</projectUrl>
-    <icon>icon.png</icon>
-    <tags>oqtane module</tags>
-    <releaseNotes></releaseNotes>
-    <summary></summary>
-    <dependencies>
-      <dependency id="Oqtane.Framework" version="5.1.1" />
-    </dependencies>
-  </metadata>
-  <files>
-    <file src="..\Client\bin\Release\net8.0\ADefWebserver.Module.HtmlTextV2.Client.Oqtane.dll" target="lib\net8.0" /> 
-    <file src="..\Client\bin\Release\net8.0\ADefWebserver.Module.HtmlTextV2.Client.Oqtane.pdb" target="lib\net8.0" /> 
-    <file src="..\Server\bin\Release\net8.0\ADefWebserver.Module.HtmlTextV2.Server.Oqtane.dll" target="lib\net8.0" /> 
-    <file src="..\Server\bin\Release\net8.0\ADefWebserver.Module.HtmlTextV2.Server.Oqtane.pdb" target="lib\net8.0" /> 
-    <file src="..\Shared\bin\Release\net8.0\ADefWebserver.Module.HtmlTextV2.Shared.Oqtane.dll" target="lib\net8.0" /> 
-    <file src="..\Shared\bin\Release\net8.0\ADefWebserver.Module.HtmlTextV2.Shared.Oqtane.pdb" target="lib\net8.0" /> 
-    <file src="..\Server\wwwroot\**\*.*" target="wwwroot" /> 
-    <file src="icon.png" target="" />
-  </files>
+	<metadata>
+		<id>ADefWebserver.Module.HtmlTextV2</id>
+		<version>1.1.0</version>
+		<authors>ADefWebserver</authors>
+		<owners>ADefWebserver</owners>
+		<title>HtmlTextV2</title>
+		<description>HTML Module</description>
+		<copyright>ADefWebserver</copyright>
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<license type="expression">MIT</license>
+		<projectUrl>https://github.com/oqtane/oqtane.framework</projectUrl>
+		<icon>icon.png</icon>
+		<tags>oqtane module</tags>
+		<releaseNotes></releaseNotes>
+		<summary></summary>
+		<dependencies>
+			<dependency id="Oqtane.Framework" version="5.1.1" />
+		</dependencies>
+	</metadata>
+	<files>
+		<file src="..\Client\bin\Release\net8.0\ADefWebserver.Module.HtmlTextV2.Client.Oqtane.dll" target="lib\net8.0" />
+		<file src="..\Client\bin\Release\net8.0\ADefWebserver.Module.HtmlTextV2.Client.Oqtane.pdb" target="lib\net8.0" />
+		<file src="..\Server\bin\Release\net8.0\ADefWebserver.Module.HtmlTextV2.Server.Oqtane.dll" target="lib\net8.0" />
+		<file src="..\Server\bin\Release\net8.0\ADefWebserver.Module.HtmlTextV2.Server.Oqtane.pdb" target="lib\net8.0" />
+		<file src="..\Shared\bin\Release\net8.0\ADefWebserver.Module.HtmlTextV2.Shared.Oqtane.dll" target="lib\net8.0" />
+		<file src="..\Shared\bin\Release\net8.0\ADefWebserver.Module.HtmlTextV2.Shared.Oqtane.pdb" target="lib\net8.0" />
+		<file src="..\Client\bin\Release\net8.0\HtmlEditor.Blazor.dll" target="lib\net8.0" />
+		<file src="..\Client\bin\Release\net8.0\HtmlEditor.Blazor.pdb" target="lib\net8.0" />
+		<file src="..\Client\bin\Release\net8.0\System.Linq.Dynamic.Core" target="lib\net8.0" />
+		<file src="..\Client\bin\Release\net8.0\Microsoft.CSharp" target="lib\net8.0" />
+		<file src="..\Server\wwwroot\**\*.*" target="wwwroot" />
+		<file src="icon.png" target="" />
+	</files>
 </package>

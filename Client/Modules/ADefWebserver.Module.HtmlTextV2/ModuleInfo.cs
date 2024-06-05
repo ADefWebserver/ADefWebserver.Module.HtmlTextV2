@@ -12,7 +12,7 @@ namespace ADefWebserver.Module.HtmlTextV2
             Version = "1.2.0",
             ServerManagerType = "ADefWebserver.Module.HtmlTextV2.Manager.HtmlTextV2Manager, ADefWebserver.Module.HtmlTextV2.Server.Oqtane",
             ReleaseVersions = "1.0.0,1.1.0,1.2.0",
-            Dependencies = "ADefWebserver.Module.HtmlTextV2.Shared.Oqtane",
+            Dependencies = "ADefWebserver.Module.HtmlTextV2.Shared.Oqtane,HtmlEditor.Blazor,System.Linq.Dynamic.Core,Microsoft.CSharp",
             PackageName = "ADefWebserver.Module.HtmlTextV2" 
         };
     }

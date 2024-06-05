@@ -12,6 +12,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ADefWebserver.Module.HtmlTe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Oqtane.Server", "..\oqtane.framework\Oqtane.Server\Oqtane.Server.csproj", "{3E6141BD-F051-4765-90B1-B8162EB6FFBD}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HtmlEditor.Blazor", "HtmlEditor.Blazor\HtmlEditor.Blazor.csproj", "{7752F107-7A21-4377-9979-044C8A4A845D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{3E6141BD-F051-4765-90B1-B8162EB6FFBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3E6141BD-F051-4765-90B1-B8162EB6FFBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3E6141BD-F051-4765-90B1-B8162EB6FFBD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7752F107-7A21-4377-9979-044C8A4A845D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7752F107-7A21-4377-9979-044C8A4A845D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7752F107-7A21-4377-9979-044C8A4A845D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7752F107-7A21-4377-9979-044C8A4A845D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

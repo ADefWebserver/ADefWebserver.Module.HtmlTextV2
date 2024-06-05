@@ -18,10 +18,11 @@
     <PackageReference Include="Microsoft.Extensions.Localization" Version="8.0.4" />
     <PackageReference Include="System.Net.Http.Json" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Localization" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Localization" Version="2.1.1" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\HtmlEditor.Blazor\HtmlEditor.Blazor.csproj" />
     <ProjectReference Include="..\Shared\ADefWebserver.Module.HtmlTextV2.Shared.csproj" />
   </ItemGroup>
 

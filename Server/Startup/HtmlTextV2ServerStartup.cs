@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Oqtane.Infrastructure;
 using ADefWebserver.Module.HtmlTextV2.Repository;
 using ADefWebserver.Module.HtmlTextV2.Services;
+using HtmlEditor;
 
 namespace ADefWebserver.Module.HtmlTextV2.Startup
 {
@@ -23,6 +24,8 @@ namespace ADefWebserver.Module.HtmlTextV2.Startup
         {
             services.AddTransient<IHtmlTextService, ServerHtmlTextService>();
             services.AddDbContextFactory<HtmlTextContext>(opt => { }, ServiceLifetime.Transient);
+
+            services.AddScoped<HtmlEditorDialogService>();
         }
     }
 }

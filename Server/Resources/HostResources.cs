@@ -13,8 +13,7 @@ namespace ADefWebserver.Module.HtmlTextV2
             // so it does not need to be registered here
             new Resource {
 				ResourceType = ResourceType.Stylesheet,
-				Url = "_content/HtmlEditor.Blazor/" +
-				"css/default.css" },
+				Url = "_content/HtmlEditor.Blazor/css/default.css" },
             new Resource {
                 ResourceType = ResourceType.Script,
                 Url = "_content/HtmlEditor.Blazor/HtmlEditor.Blazor.js" },

@@ -27,9 +27,9 @@
 
     public override List<Resource> Resources => new List<Resource>()
     {
+        new Resource { ResourceType = ResourceType.Script, Url = "_content/HtmlEditor.Blazor/HtmlEditor.Blazor.js" },
         new Resource { ResourceType = ResourceType.Stylesheet, Url = ModulePath() + "Module.css" },
         new Resource { ResourceType = ResourceType.Stylesheet, Url = "_content/HtmlEditor.Blazor/css/default.css" },
-        new Resource { ResourceType = ResourceType.Script, Url = "_content/HtmlEditor.Blazor/HtmlEditor.Blazor.js" },
         new Resource { ResourceType = ResourceType.Stylesheet, Url = "_content/HtmlEditor.Blazor/fonts/MaterialIcons-Regular.woff" },
         new Resource { ResourceType = ResourceType.Stylesheet, Url = "_content/HtmlEditor.Blazor/fonts/roboto-v15-latin-300.woff" },
         new Resource { ResourceType = ResourceType.Stylesheet, Url = "_content/HtmlEditor.Blazor/fonts/roboto-v15-latin-700.woff" },

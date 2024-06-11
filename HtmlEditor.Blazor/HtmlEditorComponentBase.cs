@@ -1,8 +1,5 @@
-using System;
-using System.Collections.Generic;
 using System.Globalization;
 using Microsoft.AspNetCore.Components;
-using System.Threading.Tasks;
 using Microsoft.JSInterop;
 
 namespace HtmlEditor

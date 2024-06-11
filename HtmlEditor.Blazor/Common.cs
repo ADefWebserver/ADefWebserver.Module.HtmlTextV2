@@ -1,21 +1,28 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components.Web;
 using HtmlEditor.Blazor;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Text.Encodings.Web;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace HtmlEditor
 {
+    /// <summary>
+    /// Html editor mode (Rendered or Raw). Also used for toolbar buttons to enable/disable according to mode.
+    /// </summary>
+    [Flags]
+    public enum HtmlEditorMode
+    {
+        /// <summary>
+        /// The editor is in Design mode.
+        /// </summary>
+        Design = 1,
+        /// <summary>
+        /// The editor is in Source mode.
+        /// </summary>
+        Source = 2,
+    }
 
- 
     /// <summary>
     /// Supplies information about a <see cref="Menu.Click" /> event that is being raised.
     /// </summary>

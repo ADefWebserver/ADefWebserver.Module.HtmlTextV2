@@ -11,66 +11,19 @@
     </div>
 }
 
+@((MarkupString)content)
+
 @if (PageState.EditMode && content.Length > 3000)
 {
     <div class="text-center mt-2">
         <ActionLink Action="Edit" EditMode="true" ResourceKey="Edit" />
     </div>
 }
-@if (EditorReady)
-{
-    <HtmlEditorDialog />
-    <HtmlEditorComponent @bind-Value=@content style="height: 500px; margin-bottom: 1rem;" UploadUrl="upload/image" Change=@OnChange Paste=@OnPaste Execute=@OnExecute />
-
-}
-else
-{
-    <div class="text-center">
-        <div class="spinner-border text-primary" role="status">
-            <span class="sr-only">Loading...</span>
-        </div>
-    </div>
-}
 
 @code {
-    bool EditorReady = false;
-    public override List<Resource> Resources => new List<Resource>()
-    {
-        new Resource { ResourceType = ResourceType.Script, Url = "_content/HtmlEditor.Blazor/HtmlEditor.Blazor.js" },
-        new Resource { ResourceType = ResourceType.Stylesheet, Url = ModulePath() + "Module.css" },
-        new Resource { ResourceType = ResourceType.Stylesheet, Url = "_content/HtmlEditor.Blazor/css/default.css" },
-        new Resource { ResourceType = ResourceType.Stylesheet, Url = "_content/HtmlEditor.Blazor/fonts/MaterialIcons-Regular.woff" },
-        new Resource { ResourceType = ResourceType.Stylesheet, Url = "_content/HtmlEditor.Blazor/fonts/roboto-v15-latin-300.woff" },
-        new Resource { ResourceType = ResourceType.Stylesheet, Url = "_content/HtmlEditor.Blazor/fonts/roboto-v15-latin-700.woff" },
-        new Resource { ResourceType = ResourceType.Stylesheet, Url = "_content/HtmlEditor.Blazor/fonts/roboto-v15-latin-regular.woff" },
-        new Resource { ResourceType = ResourceType.Stylesheet, Url = "_content/HtmlEditor.Blazor/fonts/SourceSansPro-Black.woff" },
-        new Resource { ResourceType = ResourceType.Stylesheet, Url = "_content/HtmlEditor.Blazor/fonts/SourceSansPro-BlackIt.woff" },
-        new Resource { ResourceType = ResourceType.Stylesheet, Url = "_content/HtmlEditor.Blazor/fonts/SourceSansPro-Bold.woff" },
-        new Resource { ResourceType = ResourceType.Stylesheet, Url = "_content/HtmlEditor.Blazor/fonts/SourceSansPro-BoldIt.woff" },
-        new Resource { ResourceType = ResourceType.Stylesheet, Url = "_content/HtmlEditor.Blazor/fonts/SourceSansPro-ExtraLight.woff" },
-        new Resource { ResourceType = ResourceType.Stylesheet, Url = "_content/HtmlEditor.Blazor/fonts/SourceSansPro-ExtraLightIt.woff" },
-        new Resource { ResourceType = ResourceType.Stylesheet, Url = "_content/HtmlEditor.Blazor/fonts/SourceSansPro-It.woff" },
-        new Resource { ResourceType = ResourceType.Stylesheet, Url = "_content/HtmlEditor.Blazor/fonts/SourceSansPro-Light.woff" },
-        new Resource { ResourceType = ResourceType.Stylesheet, Url = "_content/HtmlEditor.Blazor/fonts/SourceSansPro-LightIt.woff" },
-        new Resource { ResourceType = ResourceType.Stylesheet, Url = "_content/HtmlEditor.Blazor/fonts/SourceSansPro-Regular.woff" },
-        new Resource { ResourceType = ResourceType.Stylesheet, Url = "_content/HtmlEditor.Blazor/fonts/SourceSansPro-Semibold.woff" },
-        new Resource { ResourceType = ResourceType.Stylesheet, Url = "_content/HtmlEditor.Blazor/fonts/SourceSansPro-SemiboldIt.woff" },
-    };
-
     private string content = "";
 
     public override string RenderMode => RenderModes.Static;
-
-    protected override async Task OnInitializedAsync()
-    {
-        await base.OnInitializedAsync();
-
-        // Wait 1 second 
-        // to join the UI thread
-        await Task.Delay(1000);
-
-        EditorReady = true;
-    }
 
     protected override async Task OnParametersSetAsync()
     {
@@ -95,39 +48,5 @@ else
             await logger.LogError(ex, "Error Loading Content {Error}", ex.Message);
             AddModuleMessage(Localizer["Error.Content.Load"], MessageType.Error);
         }
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        try
-        {
-            // register the JavaScript library declared in Resources
-            await base.OnAfterRenderAsync(firstRender);
-
-            if (!firstRender)
-            {
-               // EditorReady = true;
-            }
-        }
-        catch (Exception ex)
-        {
-            await logger.LogError(ex, "Error Loading Content {Error}", ex.Message);
-            AddModuleMessage(Localizer["Error.Content.Load"], MessageType.Error);
-        }
-    }
-
-    void OnPaste(HtmlEditorPasteEventArgs args)
-    {
-        //console.Log($"Paste: {args.Html}");
-    }
-
-    void OnChange(string html)
-    {
-        //console.Log($"Change: {html}");
-    }
-
-    void OnExecute(HtmlEditorExecuteEventArgs args)
-    {
-        //console.Log($"Execute: {args.CommandName}");
     }
 }

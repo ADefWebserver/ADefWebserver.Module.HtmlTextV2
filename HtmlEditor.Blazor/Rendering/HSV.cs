@@ -1,5 +1,3 @@
-using System;
-
 namespace HtmlEditor.Blazor.Rendering
 {
     /// <summary>

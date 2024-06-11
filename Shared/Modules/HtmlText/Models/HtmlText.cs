@@ -1,7 +1,5 @@
-using System;
 using Oqtane.Models;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using Oqtane.Documentation;
 
 namespace ADefWebserver.Module.HtmlTextV2.Models

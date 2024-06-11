@@ -46,9 +46,11 @@
                 <HtmlEditorFontName />
                 <HtmlEditorFontSize />
                 <HtmlEditorFormatBlock />
+                <HtmlEditorSource />
             }
             </CascadingValue>
         </div>
-        <div @ref=@ContentEditable class="html-editor-content" contenteditable=@(!Disabled) @onfocus=@OnFocus @onblur=@OnBlur></div>
+        <HtmlEditorTextArea @ref=@TextArea spellcheck="false" Visible=@(mode == HtmlEditorMode.Source) class="html-editor-source" Value=@Html Change=@SourceChanged />
+        <div hidden="@(mode != HtmlEditorMode.Design)" @ref=@ContentEditable class="html-editor-content" contenteditable=@(!Disabled) @onfocus=@OnFocus @onblur=@OnBlur></div>
     </div>
 }

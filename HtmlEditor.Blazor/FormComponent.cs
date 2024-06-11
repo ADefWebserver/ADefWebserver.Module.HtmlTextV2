@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components.Web;
@@ -11,12 +8,12 @@ namespace HtmlEditor
 {
     /// <summary>
     /// Class FormComponent.
-    /// Implements the <see cref="HtmlEditor.HtmlEditorComponentBase" />
-    /// Implements the <see cref="HtmlEditor.IHtmlEditorFormComponent" />
+    /// Implements the <see cref="HtmlEditorComponentBase" />
+    /// Implements the <see cref="IHtmlEditorFormComponent" />
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    /// <seealso cref="HtmlEditor.HtmlEditorComponentBase" />
-    /// <seealso cref="HtmlEditor.IHtmlEditorFormComponent" />
+    /// <seealso cref="HtmlEditorComponentBase" />
+    /// <seealso cref="IHtmlEditorFormComponent" />
     public class FormComponent<T> : HtmlEditorComponentBase, IHtmlEditorFormComponent
     {
         /// <summary>

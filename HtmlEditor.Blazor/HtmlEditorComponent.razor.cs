@@ -1,7 +1,5 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace HtmlEditor.Blazor
 {
@@ -19,6 +17,20 @@ namespace HtmlEditor.Blazor
     public partial class HtmlEditorComponent : FormComponent<string>
     {
         /// <summary>
+        /// Specifies whether to show the toolbar. Set it to false to hide the toolbar. Default value is true.
+        /// </summary>
+        [Parameter]
+        public bool ShowToolbar { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets the mode of the editor.
+        /// </summary>
+        [Parameter]
+        public HtmlEditorMode Mode { get; set; } = HtmlEditorMode.Design;
+
+        private HtmlEditorMode mode;
+
+        /// <summary>
         /// Gets or sets the child content.
         /// </summary>
         /// <value>The child content.</value>
@@ -30,6 +42,13 @@ namespace HtmlEditor.Blazor
         /// </summary>
         [Parameter]
         public IDictionary<string, string> UploadHeaders { get; set; }
+
+        /// <summary>
+        /// Gets or sets the input.
+        /// </summary>
+        /// <value>The input.</value>
+        [Parameter]
+        public EventCallback<string> Input { get; set; }
 
         /// <summary>
         /// A callback that will be invoked when the user pastes content in the editor. Commonly used to filter unwanted HTML.
@@ -48,6 +67,23 @@ namespace HtmlEditor.Blazor
         /// </example>
         [Parameter]
         public EventCallback<HtmlEditorPasteEventArgs> Paste { get; set; }
+
+        /// <summary>
+        /// A callback that will be invoked when there is an error during upload.
+        /// </summary>
+        [Parameter]
+        public EventCallback<UploadErrorEventArgs> UploadError { get; set; }
+
+        /// <summary>
+        /// Called on upload error.
+        /// </summary>
+        /// <param name="error">The error.</param>
+        [JSInvokable("OnError")]
+        public async Task OnError(string error)
+        {
+            await UploadError.InvokeAsync(new UploadErrorEventArgs { Message = error });
+        }
+
 
         /// <summary>
         /// A callback that will be invoked when the user executes a command of the editor (e.g. by clicking one of the tools).
@@ -78,6 +114,27 @@ namespace HtmlEditor.Blazor
         public string UploadUrl { get; set; }
 
         ElementReference ContentEditable { get; set; }
+        HtmlEditorTextArea TextArea { get; set; }
+
+        //#if NET5_0_OR_GREATER
+        //        /// <summary>
+        //        /// Focuses the editor.
+        //        /// </summary>
+        //        public override ValueTask FocusAsync()
+        //        {
+
+        //            if (mode == HtmlEditorMode.Design)
+        //            {
+        //                return ContentEditable.FocusAsync();
+        //            }
+        //            else
+        //            {
+        //                return TextArea.Element.FocusAsync();
+        //            }
+        //        }
+        //#endif
+
+        private readonly IDictionary<string, Func<Task>> shortcuts = new Dictionary<string, Func<Task>>();
 
         internal HtmlEditorCommandState State { get; set; } = new HtmlEditorCommandState();
 
@@ -113,14 +170,58 @@ namespace HtmlEditor.Blazor
         {
             State = await JSRuntime.InvokeAsync<HtmlEditorCommandState>("HtmlEditor.execCommand", ContentEditable, name, value);
             await OnExecuteAsync(name);
-            Html = State.Html;
+
+            if (Html != State.Html)
+            {
+                Html = State.Html;
+
+                htmlChanged = true;
+
+                await OnChange();
+            }
+        }
+
+        /// <summary>
+        /// Executes the action associated with the specified shortcut. Used internally by HtmlEditor.
+        /// </summary>
+        /// <param name="shortcut"></param>
+        /// <returns></returns>
+        [JSInvokable("ExecuteShortcutAsync")]
+        public async Task ExecuteShortcutAsync(string shortcut)
+        {
+            if (shortcuts.TryGetValue(shortcut, out var action))
+            {
+                await action();
+            }
+        }
+
+        private async Task SourceChanged(string html)
+        {
+            if (Html != html)
+            {
+                Html = html;
+                htmlChanged = true;
+            }
+            await JSRuntime.InvokeVoidAsync("Radzen.innerHTML", ContentEditable, Html);
             await OnChange();
+            StateHasChanged();
         }
 
         async Task OnChange()
         {
-            await Change.InvokeAsync(Html);
-            await ValueChanged.InvokeAsync(Html);
+            if (htmlChanged)
+            {
+                htmlChanged = false;
+
+                await ValueChanged.InvokeAsync(Html);
+
+                if (FieldIdentifier.FieldName != null)
+                {
+                    EditContext?.NotifyFieldChanged(FieldIdentifier);
+                }
+
+                await Change.InvokeAsync(Html);
+            }
         }
 
         internal async Task OnExecuteAsync(string name)
@@ -158,6 +259,8 @@ namespace HtmlEditor.Blazor
             await OnChange();
         }
 
+        bool htmlChanged = false;
+
         bool visibleChanged = false;
         bool firstRender = true;
 
@@ -174,13 +277,14 @@ namespace HtmlEditor.Blazor
 
                 if (Visible)
                 {
-                    await JSRuntime.InvokeVoidAsync("HtmlEditor.createEditor", ContentEditable, UploadUrl, Paste.HasDelegate, Reference);
+                    await JSRuntime.InvokeVoidAsync("HtmlEditor.createEditor", ContentEditable, UploadUrl, Paste.HasDelegate, Reference, shortcuts.Keys);
                 }
             }
 
-            if (valueChanged)
+            if (valueChanged || visibleChanged)
             {
                 valueChanged = false;
+                visibleChanged = false;
 
                 Html = Value;
 
@@ -191,14 +295,31 @@ namespace HtmlEditor.Blazor
             }
         }
 
+        internal void SetMode(HtmlEditorMode value)
+        {
+            mode = value;
+
+            StateHasChanged();
+        }
+
+        /// <summary>
+        /// Returns the current mode of the editor.
+        /// </summary>
+        public HtmlEditorMode GetMode()
+        {
+            return mode;
+        }
+
         string Html { get; set; }
 
         /// <inheritdoc />
         protected override void OnInitialized()
         {
             Html = Value;
-        }
+            mode = Mode;
 
+            base.OnInitialized();
+        }
         /// <summary>
         /// Invoked via interop when the value of HtmlEditor changes.
         /// </summary>
@@ -206,7 +327,12 @@ namespace HtmlEditor.Blazor
         [JSInvokable]
         public void OnChange(string html)
         {
-            Html = html;
+            if (Html != html)
+            {
+                Html = html;
+                htmlChanged = true;
+            }
+            Input.InvokeAsync(html);
         }
 
         /// <summary>

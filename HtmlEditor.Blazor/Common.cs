@@ -483,6 +483,13 @@ namespace HtmlEditor
         /// </summary>
         /// <value>The field identifier.</value>
         FieldIdentifier FieldIdentifier { get; }
+
+#if NET5_0_OR_GREATER
+        /// <summary>
+        /// Sets the focus.
+        /// </summary>
+        ValueTask FocusAsync();
+#endif
     }
 
 

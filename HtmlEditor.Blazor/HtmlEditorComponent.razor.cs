@@ -116,23 +116,23 @@ namespace HtmlEditor.Blazor
         ElementReference ContentEditable { get; set; }
         HtmlEditorTextArea TextArea { get; set; }
 
-        //#if NET5_0_OR_GREATER
-        //        /// <summary>
-        //        /// Focuses the editor.
-        //        /// </summary>
-        //        public override ValueTask FocusAsync()
-        //        {
+#if NET5_0_OR_GREATER
+        /// <summary>
+        /// Focuses the editor.
+        /// </summary>
+        public override ValueTask FocusAsync()
+        {
 
-        //            if (mode == HtmlEditorMode.Design)
-        //            {
-        //                return ContentEditable.FocusAsync();
-        //            }
-        //            else
-        //            {
-        //                return TextArea.Element.FocusAsync();
-        //            }
-        //        }
-        //#endif
+            if (mode == HtmlEditorMode.Design)
+            {
+                return ContentEditable.FocusAsync();
+            }
+            else
+            {
+                return TextArea.Element.FocusAsync();
+            }
+        }
+#endif
 
         private readonly IDictionary<string, Func<Task>> shortcuts = new Dictionary<string, Func<Task>>();
 

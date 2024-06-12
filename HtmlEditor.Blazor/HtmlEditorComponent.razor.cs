@@ -3,19 +3,50 @@ using Microsoft.JSInterop;
 
 namespace HtmlEditor.Blazor
 {
-    /// <summary>
-    /// A component which edits HTML content. Provides built-in upload capabilities.
-    /// </summary>
-    /// <example>
-    /// <code>
-    /// &lt;HtmlEditorComponent @bind-Value=@html /&gt;
-    /// @code {
-    ///   string html = "@lt;strong&gt;Hello&lt;/strong&gt; world!"; 
-    /// }
-    /// </code>
-    /// </example>
-    public partial class HtmlEditorComponent : FormComponent<string>
+	
+	/// <summary>
+	/// A component which edits HTML content. Provides built-in upload capabilities.
+	/// </summary>
+	/// <example>
+	/// <code>
+	/// &lt;HtmlEditorComponent @bind-Value=@html /&gt;
+	/// @code {
+	///   string html = "@lt;strong&gt;Hello&lt;/strong&gt; world!"; 
+	/// }
+	/// </code>
+	/// </example>
+	public partial class HtmlEditorComponent : FormComponent<string>
     {
+        // Parameters for RichTextEditor.razor
+        [Parameter]
+        public string Content { get; set; }
+
+        [Parameter]
+        public bool ReadOnly { get; set; } = false;
+
+       // this is also found in FormComponent and will hide it... commented out for now.
+       // [Parameter]
+       // public string Placeholder { get; set; }
+
+        [Parameter]
+        public bool AllowFileManagement { get; set; } = true;
+
+        [Parameter]
+        public bool AllowDesignMode { get; set; } = true;
+
+        [Parameter]
+        public bool AllowSourceMode { get; set; } = true;
+
+        // parameters only applicable to rich text editor
+        [Parameter]
+        public RenderFragment ToolbarContent { get; set; }
+
+        [Parameter]
+        public string Theme { get; set; }
+
+        [Parameter]
+        public string DebugLevel { get; set; }
+
         /// <summary>
         /// Specifies whether to show the toolbar. Set it to false to hide the toolbar. Default value is true.
         /// </summary>
@@ -116,7 +147,6 @@ namespace HtmlEditor.Blazor
         ElementReference ContentEditable { get; set; }
         HtmlEditorTextArea TextArea { get; set; }
 
-#if NET5_0_OR_GREATER
         /// <summary>
         /// Focuses the editor.
         /// </summary>
@@ -132,7 +162,6 @@ namespace HtmlEditor.Blazor
                 return TextArea.Element.FocusAsync();
             }
         }
-#endif
 
         private readonly IDictionary<string, Func<Task>> shortcuts = new Dictionary<string, Func<Task>>();
 
@@ -202,7 +231,7 @@ namespace HtmlEditor.Blazor
                 Html = html;
                 htmlChanged = true;
             }
-            await JSRuntime.InvokeVoidAsync("Radzen.innerHTML", ContentEditable, Html);
+            await JSRuntime.InvokeVoidAsync("HtmlEditor.innerHTML", ContentEditable, Html);
             await OnChange();
             StateHasChanged();
         }
@@ -264,8 +293,8 @@ namespace HtmlEditor.Blazor
         bool visibleChanged = false;
         bool firstRender = true;
 
-        /// <inheritdoc />
-        protected override async Task OnAfterRenderAsync(bool firstRender)
+		/// <inheritdoc />
+		protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             await base.OnAfterRenderAsync(firstRender);
 
@@ -320,11 +349,17 @@ namespace HtmlEditor.Blazor
 
             base.OnInitialized();
         }
-        /// <summary>
-        /// Invoked via interop when the value of HtmlEditor changes.
-        /// </summary>
-        /// <param name="html">The HTML.</param>
-        [JSInvokable]
+		
+		public async Task<string> GetHtml()
+		{
+			return Html;
+		}
+
+		/// <summary>
+		/// Invoked via interop when the value of HtmlEditor changes.
+		/// </summary>
+		/// <param name="html">The HTML.</param>
+		[JSInvokable]
         public void OnChange(string html)
         {
             if (Html != html)

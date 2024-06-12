@@ -124,9 +124,9 @@
     <value>Allow File Management: </value>
   </data>
   <data name="AllowRawHtml.HelpText" xml:space="preserve">
-    <value>Specify If Editors Can Enter Raw HTML</value>
+    <value>Specify If Editors Can Enter Raw HTML In Source Mode</value>
   </data>
   <data name="AllowRawHtml.Text" xml:space="preserve">
-    <value>Allow Raw HTML:</value>
+    <value>Allow Source Mode:</value>
   </data>
 </root>

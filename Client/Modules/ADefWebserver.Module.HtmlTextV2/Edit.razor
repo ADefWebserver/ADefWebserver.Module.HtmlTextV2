@@ -12,7 +12,12 @@
 	<TabPanel Name="Edit" Heading="Edit" ResourceKey="Edit">
 		@if (_content != null)
 		{
-			<RichTextEditor Content="@_content" AllowFileManagement="@_allowfilemanagement" AllowRawHtml="@_allowrawhtml" @ref="@RichTextEditorHtml"></RichTextEditor>
+			@* 
+			<HtmlEditorComponent @bind-Value=@_content style="height: 500px; margin-bottom: 1rem;" UploadUrl="upload/image" Change=@OnChange Paste=@OnPaste Execute=@OnExecute /> 
+			<RichTextEditor Content="@_content" AllowFileManagement="@_allowfilemanagement" AllowRawHtml="@_allowrawhtml" @ref="@RichTextEditorHtml"></RichTextEditor> 
+			*@
+			<HtmlEditorDialog />
+			<HtmlEditorComponent @bind-Value="_content" style="height: 500px; margin-bottom: 1rem;" AllowSourceMode="_allowSourceMode" AllowFileManagement="_allowFileManagement" @ref="@HtmlEditorComponentHtml"/>
 			<br />
 			<button type="button" class="btn btn-success" @onclick="SaveContent">@Localizer["Save"]</button>
 			<NavLink class="btn btn-secondary" href="@NavigateUrl()">@Localizer["Cancel"]</NavLink>
@@ -55,28 +60,15 @@
 		new Resource { ResourceType = ResourceType.Script, Url = "_content/HtmlEditor.Blazor/HtmlEditor.Blazor.js" },
 		new Resource { ResourceType = ResourceType.Stylesheet, Url = ModulePath() + "Module.css" },
 		new Resource { ResourceType = ResourceType.Stylesheet, Url = "_content/HtmlEditor.Blazor/css/default.css" },
-		new Resource { ResourceType = ResourceType.Stylesheet, Url = "_content/HtmlEditor.Blazor/fonts/MaterialIcons-Regular.woff" },
-		new Resource { ResourceType = ResourceType.Stylesheet, Url = "_content/HtmlEditor.Blazor/fonts/roboto-v15-latin-300.woff" },
-		new Resource { ResourceType = ResourceType.Stylesheet, Url = "_content/HtmlEditor.Blazor/fonts/roboto-v15-latin-700.woff" },
-		new Resource { ResourceType = ResourceType.Stylesheet, Url = "_content/HtmlEditor.Blazor/fonts/roboto-v15-latin-regular.woff" },
-		new Resource { ResourceType = ResourceType.Stylesheet, Url = "_content/HtmlEditor.Blazor/fonts/SourceSansPro-Black.woff" },
-		new Resource { ResourceType = ResourceType.Stylesheet, Url = "_content/HtmlEditor.Blazor/fonts/SourceSansPro-BlackIt.woff" },
-		new Resource { ResourceType = ResourceType.Stylesheet, Url = "_content/HtmlEditor.Blazor/fonts/SourceSansPro-Bold.woff" },
-		new Resource { ResourceType = ResourceType.Stylesheet, Url = "_content/HtmlEditor.Blazor/fonts/SourceSansPro-BoldIt.woff" },
-		new Resource { ResourceType = ResourceType.Stylesheet, Url = "_content/HtmlEditor.Blazor/fonts/SourceSansPro-ExtraLight.woff" },
-		new Resource { ResourceType = ResourceType.Stylesheet, Url = "_content/HtmlEditor.Blazor/fonts/SourceSansPro-ExtraLightIt.woff" },
-		new Resource { ResourceType = ResourceType.Stylesheet, Url = "_content/HtmlEditor.Blazor/fonts/SourceSansPro-It.woff" },
-		new Resource { ResourceType = ResourceType.Stylesheet, Url = "_content/HtmlEditor.Blazor/fonts/SourceSansPro-Light.woff" },
-		new Resource { ResourceType = ResourceType.Stylesheet, Url = "_content/HtmlEditor.Blazor/fonts/SourceSansPro-LightIt.woff" },
-		new Resource { ResourceType = ResourceType.Stylesheet, Url = "_content/HtmlEditor.Blazor/fonts/SourceSansPro-Regular.woff" },
-		new Resource { ResourceType = ResourceType.Stylesheet, Url = "_content/HtmlEditor.Blazor/fonts/SourceSansPro-Semibold.woff" },
-		new Resource { ResourceType = ResourceType.Stylesheet, Url = "_content/HtmlEditor.Blazor/fonts/SourceSansPro-SemiboldIt.woff" }
 	};
 
-	private RichTextEditor RichTextEditorHtml;
-	private bool _allowfilemanagement;
-	private bool _allowrawhtml;
+    
+
+	private HtmlEditorComponent HtmlEditorComponentHtml;
+	private bool _allowFileManagement = true;
+	private bool _allowSourceMode = true;
 	private string _content = null;
+	private HtmlEditorMode Mode = HtmlEditorMode.Design; // Default mode
 	private string _createdby;
 	private DateTime _createdon;
 	private string _modifiedby;
@@ -88,8 +80,8 @@
 	{
 		try
 		{
-			_allowfilemanagement = bool.Parse(SettingService.GetSetting(ModuleState.Settings, "AllowFileManagement", "true"));
-			_allowrawhtml = bool.Parse(SettingService.GetSetting(ModuleState.Settings, "AllowRawHtml", "true"));
+			_allowFileManagement = bool.Parse(SettingService.GetSetting(ModuleState.Settings, "AllowFileManagement", "true"));
+			_allowSourceMode = bool.Parse(SettingService.GetSetting(ModuleState.Settings, "AllowSourceMode", "true"));
 			await LoadContent();
 		}
 		catch (Exception ex)
@@ -124,7 +116,7 @@
 
 	private async Task SaveContent()
 	{
-		string content = await RichTextEditorHtml.GetHtml();
+		string content = _content;
 		content = Utilities.FormatContent(content, PageState.Alias, "save");
 
 		try
@@ -208,4 +200,20 @@
 			AddModuleMessage(Localizer["Error.Content.Delete"], MessageType.Error);
 		}
 	}
+
+	void OnPaste(HtmlEditorPasteEventArgs args)
+	{
+		//console.Log($"Paste: {args.Html}");
+	}
+
+	void OnChange(string html)
+	{
+		//console.Log($"Change: {html}");
+	}
+
+	void OnExecute(HtmlEditorExecuteEventArgs args)
+	{
+		//console.Log($"Execute: {args.CommandName}");
+	}
+
 }

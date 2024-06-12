@@ -229,12 +229,10 @@ namespace HtmlEditor
                                                                        .AddDisabled(Disabled)
                                                                        .Add(FieldIdentifier, EditContext);
 
-#if NET5_0_OR_GREATER
         /// <inheritdoc/>
         public virtual async ValueTask FocusAsync()
         {
             await Element.FocusAsync();
         }
-#endif
     }
 }

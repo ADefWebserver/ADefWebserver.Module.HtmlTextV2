@@ -56,7 +56,7 @@
             }
             </CascadingValue>
         </div>
-        <HtmlEditorTextArea @ref=@TextArea spellcheck="false" Visible=@(mode == HtmlEditorMode.Source) style="height:auto; min-height:100%;"class="html-editor-source" Value=@Html Change=@SourceChanged />
+        <HtmlEditorTextArea @ref=@TextArea spellcheck="false" Visible=@(mode == HtmlEditorMode.Source) style="height:100%;"class="html-editor-source" Value=@Html Change=@SourceChanged />
         <div hidden="@(mode != HtmlEditorMode.Design)" @ref=@ContentEditable class="html-editor-content" contenteditable=@(!Disabled) @onfocus=@OnFocus @onblur=@OnBlur></div>
     </div>
 }

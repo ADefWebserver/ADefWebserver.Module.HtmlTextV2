@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using HtmlEditor.Blazor.Rendering;
-using System.Threading.Tasks;
 
 namespace HtmlEditor.Blazor
 {

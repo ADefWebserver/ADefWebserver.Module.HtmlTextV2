@@ -6,18 +6,18 @@
 
 <div class="container">
     <div class="row mb-1 align-items-center">
-        <Label Class="col-sm-3" For="files" ResourceKey="AllowFileManagement" ResourceType="@resourceType" HelpText="Specify If Editors Can Upload and Select Files">Allow File Management: </Label>
+        <Label Class="col-sm-3" For="files" ResourceKey="AllowFileManagement" ResourceType="@_resourceType" HelpText="Specify If Editors Can Upload and Select Files">Allow File Management: </Label>
         <div class="col-sm-9">
-            <select id="files" class="form-select" @bind="@_allowfilemanagement">
+            <select id="files" class="form-select" @bind="@_allowFileManagement">
                 <option value="true">@Localizer["Yes"]</option>
                 <option value="false">@Localizer["No"]</option>
             </select>
         </div>
     </div>
     <div class="row mb-1 align-items-center">
-        <Label Class="col-sm-3" For="files" ResourceKey="AllowRawHtml" ResourceType="@resourceType" HelpText="Specify If Editors Can Enter Raw HTML">Allow Raw HTML: </Label>
+        <Label Class="col-sm-3" For="files" ResourceKey="AllowSourceMode" ResourceType="@_resourceType" HelpText="Specify If Editors Can Enter Raw HTML">Allow Source Mode: </Label>
         <div class="col-sm-9">
-            <select id="files" class="form-select" @bind="@_allowrawhtml">
+            <select id="files" class="form-select" @bind="@_allowSourceMode">
                 <option value="true">@Localizer["Yes"]</option>
                 <option value="false">@Localizer["No"]</option>
             </select>
@@ -26,16 +26,16 @@
 </div>
 
 @code {
-    private string resourceType = "ADefWebserver.Module.HtmlTextV2.Settings, Oqtane.Client"; // for localization
-    private string _allowfilemanagement;
-    private string _allowrawhtml;
+    private string _resourceType = "ADefWebserver.Module.HtmlTextV2.Settings, Oqtane.Client"; // for localization
+    private string _allowFileManagement;
+    private string _allowSourceMode;
 
     protected override void OnInitialized()
     {
         try
         {
-            _allowfilemanagement = SettingService.GetSetting(ModuleState.Settings, "AllowFileManagement", "true");
-            _allowrawhtml = SettingService.GetSetting(ModuleState.Settings, "AllowRawHtml", "true");
+            _allowFileManagement = SettingService.GetSetting(ModuleState.Settings, "AllowFileManagement", "true");
+            _allowSourceMode = SettingService.GetSetting(ModuleState.Settings, "AllowSourceMode", "true");
         }
         catch (Exception ex)
         {
@@ -48,8 +48,8 @@
         try
         {
             var settings = await SettingService.GetModuleSettingsAsync(ModuleState.ModuleId);
-            settings = SettingService.SetSetting(settings, "AllowFileManagement", _allowfilemanagement);
-            settings = SettingService.SetSetting(settings, "AllowRawHtml", _allowrawhtml);
+            settings = SettingService.SetSetting(settings, "AllowFileManagement", _allowFileManagement);
+            settings = SettingService.SetSetting(settings, "AllowSourceMode", _allowSourceMode);
             await SettingService.UpdateModuleSettingsAsync(settings, ModuleState.ModuleId);
         }
         catch (Exception ex)

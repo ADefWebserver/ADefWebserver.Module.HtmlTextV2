@@ -13,7 +13,7 @@
             {
                 @ChildContent
             }
-            else
+           else
             {
                 <HtmlEditorUndo />
                 <HtmlEditorRedo />
@@ -32,9 +32,6 @@
                 <HtmlEditorOutdent />
                 <HtmlEditorUnorderedList />
                 <HtmlEditorOrderedList />
-                <HtmlEditorSeparator />
-                <HtmlEditorColor />
-                <HtmlEditorBackground />
                 <HtmlEditorRemoveFormat />
                 <HtmlEditorSeparator />
                 <HtmlEditorSubscript />
@@ -42,14 +39,20 @@
                 <HtmlEditorSeparator />
                 <HtmlEditorLink />
                 <HtmlEditorUnlink />
-                @if (AllowFileManagement)
-                {
-                   @*  **TODO**
-                   <HtmlEditorImage />*@
-                }
+                @*  *** TODO ***
+                <HtmlEditorSeparator />
+                <HtmlEditorColor />
+                <HtmlEditorBackground />
+                <HtmlEditorSeparator />
                 <HtmlEditorFontName />
                 <HtmlEditorFontSize />
                 <HtmlEditorFormatBlock />
+                <HtmlEditorSeparator />
+                @if (AllowFileManagement)
+                {
+                <HtmlEditorImage />
+                }            
+                *@
                 @if (AllowSourceMode)
                 {
                     <HtmlEditorSource />

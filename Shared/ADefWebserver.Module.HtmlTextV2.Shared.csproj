@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>    
+    <TargetFramework>net9.0</TargetFramework>    
     <Version>1.0.0</Version>
     <Product>ADefWebserver.Module.HtmlTextV2</Product>
     <Authors>ADefWebserver</Authors>
@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="Oqtane.Shared"><HintPath>..\..\oqtane.framework\Oqtane.Server\bin\Debug\net8.0\Oqtane.Shared.dll</HintPath></Reference>
+    <Reference Include="Oqtane.Shared"><HintPath>..\..\oqtane.framework\Oqtane.Server\bin\Debug\net9.0\Oqtane.Shared.dll</HintPath></Reference>
   </ItemGroup>
 
 </Project>
